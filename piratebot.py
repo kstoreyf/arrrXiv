@@ -2,23 +2,25 @@ import time
 import numpy as np
 from os import environ
 
-import arrr
+import translatorrr
 import feedparser
 import urllib
 import tweepy
 
 import credentials
 
+local = False
 
-consumer_key = environ['CONSUMER_KEY']
-consumer_secret = environ['CONSUMER_SECRET']
-access_token = environ['ACCESS_TOKEN']
-access_secret = environ['ACCESS_SECRET']
-
-#consumer_key = credentials.CONSUMER_KEY
-#consumer_secret = credentials.CONSUMER_SECRET
-#access_token = credentials.ACCESS_TOKEN
-#access_secret = credentials.ACCESS_SECRET
+if local:
+	consumer_key = credentials.CONSUMER_KEY
+	consumer_secret = credentials.CONSUMER_SECRET
+	access_token = credentials.ACCESS_TOKEN
+	access_secret = credentials.ACCESS_SECRET
+else:
+	consumer_key = environ['CONSUMER_KEY']
+	consumer_secret = environ['CONSUMER_SECRET']
+	access_token = environ['ACCESS_TOKEN']
+	access_secret = environ['ACCESS_SECRET']
 
 
 def search_arXiv(search_query, start=0):
@@ -53,7 +55,7 @@ def search_arXiv(search_query, start=0):
 def pirate_title(search_query, start=0):
     feed = search_arXiv(search_query, start=start)
     entry = feed.entries[0]
-    title = arrr.translate_title(entry.title)
+    title = translatorrr.translate_title(entry.title)
     return title
 
 #p = pirate_title('astro-ph', start=40000)
@@ -61,7 +63,7 @@ def pirate_title(search_query, start=0):
 
 def tweet_title():
 
-	interval = 30 #seconds, for testing
+	interval = 20 #seconds, for testing
 
 	auth = tweepy.OAuthHandler(consumer_key, consumer_secret)    
 	auth.set_access_token(access_token, access_secret)
