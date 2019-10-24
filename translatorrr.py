@@ -63,7 +63,11 @@ _PIRATE_WORDS = {
 	"detectors": "spyglasses",
 	"observe": "spy",
 	"observing": "spying",
-	"H0": "Yo-H0-H0"
+	"h0": "Yo-H0-H0",
+	"survey": "scurvy",
+	"comment": "parley",
+	"discussion": "parley",
+
 }
 
 _ASTRO_ADJECTIVES = [
@@ -88,6 +92,8 @@ _ASTRO_NOUNS = [
 	"constraints",
 	"orbit",
 	"orbits",
+	"result",
+	"results",
 ]
 
 #: A list of Pirate phrases to randomly insert before or after sentences.
@@ -115,6 +121,9 @@ _PIRATE_EXCLAMATIONS = [
 	"Savvy?",
 	"Yo Ho Ho!",
 	"Mutiny!",
+	"Ahoy me hearties!",
+	"Thar she blows!",
+	"Avast ye!"
 ]
 
 _PIRATE_ADJECTIVES = [
@@ -124,6 +133,8 @@ _PIRATE_ADJECTIVES = [
 	"hornswaggling",
 	"broadside",
 	"starboard",
+	"deck-swabbing",
+	"scurvy-infested",
 ]
 
 def get_version():
@@ -171,13 +182,17 @@ def translate_title(english):
 	# Capitalize words that begin a sentence and potentially insert a pirate
 	# phrase with a chance of 1 in 5.
 	exp = _PIRATE_EXCLAMATIONS[np.random.randint(len(_PIRATE_EXCLAMATIONS))]
-	for i in range(len(words)):
+	#for i in range(len(words)):
+	nwords = len(words)
+	i = 0
+	while i < nwords:
 		word = words[i]
-		if word.endswith('r'):
-			result[i] = word + 'rr'
 		capitalize = False
 		if word[0].isupper(): #checks if first letter capitalized
 			capitalize = True
+		
+		if word.endswith('r'):
+			result[i] = word + 'rr'
 		if word.lower() in _PIRATE_WORDS:
 			newword = _PIRATE_WORDS[word.lower()]
 			if capitalize:
@@ -185,7 +200,13 @@ def translate_title(english):
 			result[i] = newword
 		if word.lower() in _ASTRO_NOUNS:
 			#if random.randint(0, 0) == 0:
-			result.insert(i, random.choice(_PIRATE_ADJECTIVES))	
+			adj = random.choice(_PIRATE_ADJECTIVES)
+			if capitalize:
+				adj = adj.capitalize()
+			result.insert(i, adj)
+			i += len(adj.split())
+			nwords += len(adj.split())	
+		i+=1
 	
 	title = ' '.join(result)
 	
