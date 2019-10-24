@@ -67,6 +67,7 @@ _PIRATE_WORDS = {
 	"survey": "scurvy",
 	"comment": "parley",
 	"discussion": "parley",
+	"H0LiCOW": "Yo-H0-H0LiCOW"
 
 }
 

@@ -75,9 +75,9 @@ def tweet_title():
 	api = tweepy.API(auth)
 
 	while True:
-		rand = np.random.randint(1000) #max ive gotten to work
+		rand = np.random.randint(10000) #max ive gotten to work
 		print(rand)
-		pt, pl = pirate_title("astro-ph", start=rand)
+		pt, pl = pirate_title("cat:astro-ph", start=rand)
 		mytweet = pt + '\n' + pl
 		print(mytweet)
 		if tweet:
