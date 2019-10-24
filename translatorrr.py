@@ -55,17 +55,46 @@ _PIRATE_WORDS = {
 	"idiot": "scallywag",
 	"of": "o'",
 	"are": "be",
-	"and": "an'"
+	"and": "an'",
+	"planck": "Walk-the-Planck",
+	"telescope": "spyglass",
+	"telescopes": "spyglasses",
+	"detector": "spyglass",
+	"detectors": "spyglasses",
+	"observe": "spy",
+	"observing": "spying",
+	"H0": "Yo-H0-H0"
 }
 
+_ASTRO_ADJECTIVES = [
+	"stellar",
+	"dark",
+	"black",
+	"gravitational",
+]
+
+_ASTRO_NOUNS = [
+	"galaxy",
+	"galaxies",
+	"star",
+	"stars",
+	"detection",
+	"detections",
+	"universe",
+	"data",
+	"black hole",
+	"black holes",
+	"contraint",
+	"constraints",
+	"orbit",
+	"orbits",
+]
 
 #: A list of Pirate phrases to randomly insert before or after sentences.
 _PIRATE_PHRASES = [
 	"batten down the hatches!",
 	"splice the mainbrace!",
 	"thar she blows!",
-	"arrr!",
-	"weigh anchor and hoist the mizzen!",
 	"savvy?",
 	"dead men tell no tales.",
 	"cleave him to the brisket!",
@@ -74,12 +103,27 @@ _PIRATE_PHRASES = [
 	"avast ye!",
 ]
 
-_PIRATE_EXPRESSIONS = [
+_PIRATE_EXCLAMATIONS = [
 	"Fire in the hole!",
 	"Ahoy matey!",
 	"Blimey!",
 	"Arrrgh!",
-	"Splice the mainbrace!"
+	"Splice the mainbrace!",
+	"Shiver me timbers!",
+	"Ahoy cap'n!",
+	"Blow me down!",
+	"Savvy?",
+	"Yo Ho Ho!",
+	"Mutiny!",
+]
+
+_PIRATE_ADJECTIVES = [
+	"lily-livered",
+	"swashbuckling",
+	"bilge-sucking",
+	"hornswaggling",
+	"broadside",
+	"starboard",
 ]
 
 def get_version():
@@ -126,21 +170,31 @@ def translate_title(english):
 	#result = [_PIRATE_WORDS.get(word, word) for word in words]
 	# Capitalize words that begin a sentence and potentially insert a pirate
 	# phrase with a chance of 1 in 5.
-	exp = _PIRATE_EXPRESSIONS[np.random.randint(len(_PIRATE_EXPRESSIONS))]
+	exp = _PIRATE_EXCLAMATIONS[np.random.randint(len(_PIRATE_EXCLAMATIONS))]
 	for i in range(len(words)):
 		word = words[i]
 		if word.endswith('r'):
 			result[i] = word + 'rr'
 		capitalize = False
-		if word[0].isupper():
+		if word[0].isupper(): #checks if first letter capitalized
 			capitalize = True
 		if word.lower() in _PIRATE_WORDS:
 			newword = _PIRATE_WORDS[word.lower()]
 			if capitalize:
 				newword = newword.capitalize()
 			result[i] = newword
+		if word.lower() in _ASTRO_NOUNS:
+			#if random.randint(0, 0) == 0:
+			result.insert(i, random.choice(_PIRATE_ADJECTIVES))	
+	
 	title = ' '.join(result)
-	title = exp + ' ' + title		
+	
+	rand = random.randint(0, 1) 
+	if rand == 0:
+		title = exp + ' ' + title		
+	else:
+		title = title + ' - ' + exp
+
 	return title
 
 
