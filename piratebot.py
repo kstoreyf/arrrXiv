@@ -1,5 +1,6 @@
 import time
 import numpy as np
+from os import environ
 
 import arrr
 import feedparser
@@ -9,10 +10,15 @@ import tweepy
 import credentials
 
 
-consumer_key = credentials.CONSUMER_KEY
-consumer_secret = credentials.CONSUMER_SECRET
-access_token = credentials.ACCESS_TOKEN
-access_secret = credentials.ACCESS_SECRET
+consumer_key = environ['CONSUMER_KEY']
+consumer_secret = environ['CONSUMER_SECRET']
+access_token = environ['ACCESS_TOKEN']
+access_secret = environ['ACCESS_SECRET']
+
+#consumer_key = credentials.CONSUMER_KEY
+#consumer_secret = credentials.CONSUMER_SECRET
+#access_token = credentials.ACCESS_TOKEN
+#access_secret = credentials.ACCESS_SECRET
 
 
 def search_arXiv(search_query, start=0):

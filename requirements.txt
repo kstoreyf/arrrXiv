@@ -1,1 +1,4 @@
-Tweepy
+tweepy
+arrr
+feedparser
+urllib
