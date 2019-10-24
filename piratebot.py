@@ -7,11 +7,11 @@ import urllib
 import tweepy
 
 import translatorrr
-import credentials
 
 local = False
 
 if local:
+	import credentials
 	consumer_key = credentials.CONSUMER_KEY
 	consumer_secret = credentials.CONSUMER_SECRET
 	access_token = credentials.ACCESS_TOKEN
