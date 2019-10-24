@@ -2,11 +2,11 @@ import time
 import numpy as np
 from os import environ
 
-import translatorrr
 import feedparser
 import urllib
 import tweepy
 
+import translatorrr
 import credentials
 
 local = False
