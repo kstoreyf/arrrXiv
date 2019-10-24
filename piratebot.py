@@ -68,7 +68,7 @@ def pirate_title(search_query, start=0):
 
 def tweet_title():
 
-	interval = 60 * 15 #seconds, for testing
+	interval = 60 * 5 #seconds, for testing
 
 	auth = tweepy.OAuthHandler(consumer_key, consumer_secret)	 
 	auth.set_access_token(access_token, access_secret)
