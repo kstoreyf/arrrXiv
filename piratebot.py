@@ -9,10 +9,10 @@ import re
 
 import translatorrr
 
-local = False
-tweet_now = True
-#local = True
-#tweet_now = False
+#local = False
+#tweet_now = True
+local = True
+tweet_now = False
 
 def get_api():
 	if local:
@@ -166,7 +166,7 @@ def get_since_id(api):
 
 def main():
 	
-	interval = 60 * 60 * 6 # seconds
+	interval = 60*60*6 # seconds
 
 	api = get_api()
 	#since_id = int(np.loadtxt('since_id.dat', dtype=int))
@@ -175,11 +175,16 @@ def main():
 	prev = time.time()
 	
 	# start off with a title
-	tweet_title(api)
+	#tweet_title(api)
 	
+	print(interval)
 	while True:
 		since_id = check_mentions(api, since_id)
+		print("times")
+		print(prev)
 		now = time.time()
+		print(now)
+		print(now-prev)
 		if (now - prev > interval):
 			tweet_title(api)
 			prev = now
