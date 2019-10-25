@@ -9,7 +9,7 @@ import re
 
 import translatorrr
 
-local = False
+local = True
 tweet_now = True
 
 
@@ -27,8 +27,8 @@ def get_api():
 		access_secret = environ['ACCESS_SECRET']
 
 	auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_token, access_secret)
-    api = tweepy.API(auth)
+	auth.set_access_token(access_token, access_secret)
+	api = tweepy.API(auth)
 	return api
 
 
@@ -73,24 +73,35 @@ def pirate_title(search_query, start=0):
 #p = pirate_title('astro-ph', start=40000)
 #print(p)
 
-def tweet_title():
+def tweet_title(api):
 	print("Tweeting random title")
-	rand = np.random.randint(10000) #max ive gotten to work
-	print(rand)
-	pt, pl = pirate_title("cat:astro-ph&sortBy=lastUpdatedDate&sortOrder=descending", start=rand)
-	mytweet = pt + '\n' + pl
-	print(mytweet)
+	mytweet = None
+	for i in range(5):
+		rand = np.random.randint(10000) #max ive gotten to work
+		print(rand)
+		try:
+			pt, pl = pirate_title("cat:astro-ph&sortBy=lastUpdatedDate&sortOrder=descending", start=rand)
+			mytweet = pt + '\n' + pl
+			print(mytweet)
+			break
+		except IndexError:
+			pass
+	if not mytweet:
+		raise ValueError("Scallywags! Bad paper search!")
+	
 	if tweet_now:
 		api.update_status(mytweet)
 
 
-def check_mentions(api, keywords, since_id):
+def check_mentions(api, since_id):
 	print("Retrieving mentions")
-
+	print(since_id)
 	new_since_id = since_id
 	for tweet in tweepy.Cursor(api.mentions_timeline,
 		since_id=since_id).items():
+		print(tweet.id)
 		new_since_id = max(tweet.id, new_since_id)
+		print(new_since_id)
 		pattern_new = re.compile("[0-9]{4}.[0-9]{5}")
 		pattern_old = re.compile("astro-ph/[0-9]{7}")
 		
@@ -127,24 +138,28 @@ def check_mentions(api, keywords, since_id):
 				api.update_status(
 					status=status
 				)
-		np.savetxt('since_id.dat', new_since_id)
+		np.savetxt('since_id.dat', [int(new_since_id)], fmt='%d')
 	return new_since_id
 
 
 
 def main():
 	
-	interval = 30 # seconds
+	interval = 60 * 30 # seconds
 
 	api = get_api()
 	since_id = int(np.loadtxt('since_id.dat'))
+	since_id += 1
 	prev = time.time()
+	
+	# start off with a title
+	tweet_title(api)
+	
 	while True:
-		since_id = check_mentions(api, ["arrr"], since_id)
-		
+		since_id = check_mentions(api, since_id)
 		now = time.time()
-		if (prev - now > interval):
-			tweet_title()
+		if (now - prev > interval):
+			tweet_title(api)
 			prev = now
 		
 		print("Waiting...")

@@ -1,4 +1,3 @@
 tweepy
 feedparser
 numpy
-re

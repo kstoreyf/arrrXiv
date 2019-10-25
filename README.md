@@ -15,3 +15,4 @@ heroku logs
 
 If not working:
 - Make sure "local" variable set to false, "tweet_now" to true
+- Make sure requirements are up-to-date
