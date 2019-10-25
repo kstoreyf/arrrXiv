@@ -11,7 +11,8 @@ import translatorrr
 
 local = False
 tweet_now = True
-
+#local = True
+#tweet_now = False
 
 def get_api():
 	if local:
@@ -97,11 +98,15 @@ def check_mentions(api, since_id):
 	print("Retrieving mentions")
 	print(since_id)
 	new_since_id = since_id
+	print(tweepy.Cursor(api.mentions_timeline,
+        since_id=since_id))
 	for tweet in tweepy.Cursor(api.mentions_timeline,
 		since_id=since_id).items():
-		print(tweet.id)
+		print('tweetid:',tweet.id)
+		print('sinceid:',since_id)
+		print('---')
 		new_since_id = max(tweet.id, new_since_id)
-		print(new_since_id)
+		print('new:',new_since_id)
 		pattern_new = re.compile("[0-9]{4}.[0-9]{5}")
 		pattern_old = re.compile("astro-ph/[0-9]{7}")
 		
@@ -120,26 +125,35 @@ def check_mentions(api, since_id):
 					break
 				except IndexError:
 					pass
+
+		
+		print('reply:', tweet.in_reply_to_status_id )
+		reply = True
+		if tweet.in_reply_to_status_id is not None:
+			print('dont reply')
+			reply = False 
 		
 		handle = tweet.user.screen_name
 		piratename = translatorrr.pirate_person()
 		#if not quote:
-		if tweet_now:
-			if not found:
-				status = f"@{handle} Aarrrgh! I couldn't find that swashbuckling paperrr."
-				print(status)
+		if not found and reply:
+			status = f"@{handle} Aarrrgh! I couldn't find that swashbuckling paperrr."
+			print(status)
+			if tweet_now:
 				api.update_status(
 					status=status,
 					in_reply_to_status_id=tweet.id,
 				)
-			else:
-				status = f"Paperrr for the landlubber @{handle}: {mytweet} \n https://twitter.com/{handle}/status/{tweet.id}"
-				print(status)
+		if found and reply:
+			status = f"Paperrr for the landlubber @{handle}: {mytweet} \n https://twitter.com/{handle}/status/{tweet.id}"
+			print(status)
+			if tweet_now:
 				api.update_status(
 					status=status
 				)
 		new_since_id += 1
 		np.savetxt('since_id.dat', [int(new_since_id)], fmt='%d')
+		print('file:',int(np.loadtxt('since_id.dat')))
 	return new_since_id
 
 
@@ -149,8 +163,11 @@ def main():
 	interval = 60 * 10 # seconds
 
 	api = get_api()
-	since_id = int(np.loadtxt('since_id.dat'))
+	since_id = int(np.loadtxt('since_id.dat', dtype=int))
+	print("sinceid")
+	print(since_id)
 	since_id += 1
+	print(since_id)
 	prev = time.time()
 	
 	# start off with a title
