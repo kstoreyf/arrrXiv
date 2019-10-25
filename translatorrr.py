@@ -69,17 +69,15 @@ _PIRATE_WORDS = {
 	"comment": "parley",
 	"discussion": "parley",
 	"H0LiCOW": "Yo-H0-H0LiCOW"
+	"result": "booty",
+	"results": "pillages",
+	"detection": "booty",
+	"detections": "pillages"
 
 }
 
-_ASTRO_ADJECTIVES = [
-	"stellar",
-	"dark",
-	"black",
-	"gravitational",
-]
 
-_ASTRO_NOUNS = [
+_ASTRO_WORDS = [
 	"galaxy",
 	"galaxies",
 	"star",
@@ -88,14 +86,21 @@ _ASTRO_NOUNS = [
 	"detections",
 	"universe",
 	"data",
-	"black hole",
-	"black holes",
 	"contraint",
 	"constraints",
 	"orbit",
 	"orbits",
 	"result",
 	"results",
+	"supernova",
+	"supernovae",
+	"nova",
+	"novae",
+	"black", #holes
+	"cosmic", #rays
+	"dark",
+	"stellar",
+	"gravitational",
 ]
 
 #: A list of Pirate phrases to randomly insert before or after sentences.
@@ -138,6 +143,12 @@ _PIRATE_ADJECTIVES = [
 	"starboard",
 	"deck-swabbing",
 	"scurvy-infested",
+	"grog-filled",
+	"barnacle-covered",
+	"dubloon-pillaging",
+	"Planck-walking",
+	"free-booting"
+	
 ]
 
 _PIRATE_PEOPLE = [
@@ -145,11 +156,14 @@ _PIRATE_PEOPLE = [
 	"scallywag",
 	"freebooter",
 	"matey",
+	"bucaneer",
+	"bucko",
+	"blaggart",
 ]
 	
 
 def pirate_person():
-	return random.choice(_PIRATE_PEOPLE)
+	return np.random.choice(_PIRATE_PEOPLE)
 
 def get_version():
 	"""
@@ -195,7 +209,7 @@ def translate_title(english):
 	#result = [_PIRATE_WORDS.get(word, word) for word in words]
 	# Capitalize words that begin a sentence and potentially insert a pirate
 	# phrase with a chance of 1 in 5.
-	exp = _PIRATE_EXCLAMATIONS[np.random.randint(len(_PIRATE_EXCLAMATIONS))]
+	exp = np.random.choice(_PIRATE_EXCLAMATIONS)
 	#for i in range(len(words)):
 	nwords = len(words)
 	i = 0
@@ -212,7 +226,7 @@ def translate_title(english):
 			if capitalize:
 				newword = newword.capitalize()
 			result[i] = newword
-		if word.lower() in _ASTRO_NOUNS:
+		if word.lower() in _ASTRO_WORDS:
 			#if random.randint(0, 0) == 0:
 			adj = random.choice(_PIRATE_ADJECTIVES)
 			if capitalize:
