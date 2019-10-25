@@ -139,13 +139,14 @@ def check_mentions(api, since_id):
 					status=status
 				)
 		np.savetxt('since_id.dat', [int(new_since_id)], fmt='%d')
+	new_since_id += 1
 	return new_since_id
 
 
 
 def main():
 	
-	interval = 60 * 30 # seconds
+	interval = 60 * 10 # seconds
 
 	api = get_api()
 	since_id = int(np.loadtxt('since_id.dat'))
