@@ -124,7 +124,8 @@ _PIRATE_EXCLAMATIONS = [
 	"Mutiny!",
 	"Ahoy me hearties!",
 	"Thar she blows!",
-	"Avast ye!"
+	"Avast ye!",
+	"Son of a biscuit eater!"
 ]
 
 _PIRATE_ADJECTIVES = [
@@ -137,6 +138,17 @@ _PIRATE_ADJECTIVES = [
 	"deck-swabbing",
 	"scurvy-infested",
 ]
+
+_PIRATE_PEOPLE = [
+	"landlubber",
+	"scallywag",
+	"freebooter",
+	"matey",
+]
+	
+
+def pirate_person():
+	return random.choice(_PIRATE_PEOPLE)
 
 def get_version():
 	"""
