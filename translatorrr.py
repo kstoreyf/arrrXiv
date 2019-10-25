@@ -65,7 +65,7 @@ _PIRATE_WORDS = {
 	"observing": "spying",
 	"h0": "Yo-H0-H0",
 	"survey": "scurvy",
-	"surveys": "scurvys"
+	"surveys": "scurvys",
 	"comment": "parley",
 	"discussion": "parley",
 	"H0LiCOW": "Yo-H0-H0LiCOW"
