@@ -138,8 +138,8 @@ def check_mentions(api, since_id):
 				api.update_status(
 					status=status
 				)
+		new_since_id += 1
 		np.savetxt('since_id.dat', [int(new_since_id)], fmt='%d')
-	new_since_id += 1
 	return new_since_id
 
 
