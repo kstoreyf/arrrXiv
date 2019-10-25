@@ -160,7 +160,7 @@ def check_mentions(api, since_id):
 
 def main():
 	
-	interval = 60 * 10 # seconds
+	interval = 60 * 60 * 6 # seconds
 
 	api = get_api()
 	since_id = int(np.loadtxt('since_id.dat', dtype=int))
