@@ -68,11 +68,11 @@ _PIRATE_WORDS = {
 	"surveys": "scurvys",
 	"comment": "parley",
 	"discussion": "parley",
-	"H0LiCOW": "Yo-H0-H0LiCOW"
+	"H0LiCOW": "Yo-H0-H0LiCOW",
 	"result": "booty",
 	"results": "pillages",
 	"detection": "booty",
-	"detections": "pillages"
+	"detections": "pillages",
 
 }
 
