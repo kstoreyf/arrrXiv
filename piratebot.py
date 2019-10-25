@@ -9,8 +9,7 @@ import re
 
 import translatorrr
 
-local = True
-#local = False
+local = False
 tweet_now = True
 
 
