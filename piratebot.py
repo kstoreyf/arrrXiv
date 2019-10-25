@@ -9,10 +9,10 @@ import re
 
 import translatorrr
 
-#local = False
-#tweet_now = True
-local = True
-tweet_now = False
+local = False
+tweet_now = True
+#local = True
+#tweet_now = False
 
 def get_api():
 	if local:
