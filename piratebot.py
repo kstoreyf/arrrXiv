@@ -100,6 +100,7 @@ def check_mentions(api, since_id):
 	new_since_id = since_id
 	print(tweepy.Cursor(api.mentions_timeline,
         since_id=since_id))
+
 	for tweet in tweepy.Cursor(api.mentions_timeline,
 		since_id=since_id).items():
 		print('tweetid:',tweet.id)
@@ -152,22 +153,25 @@ def check_mentions(api, since_id):
 					status=status
 				)
 		new_since_id += 1
-		np.savetxt('since_id.dat', [int(new_since_id)], fmt='%d')
-		print('file:',int(np.loadtxt('since_id.dat')))
+		#np.savetxt('since_id.dat', [int(new_since_id)], fmt='%d')
+		#print('file:',int(np.loadtxt('since_id.dat')))
 	return new_since_id
 
 
+def get_since_id(api):
+	tweets = api.user_timeline()
+	ids = [tweet.id for tweet in tweets]
+	since_id = max(ids)+1
+	return since_id
 
 def main():
 	
 	interval = 60 * 60 * 6 # seconds
 
 	api = get_api()
-	since_id = int(np.loadtxt('since_id.dat', dtype=int))
-	print("sinceid")
-	print(since_id)
-	since_id += 1
-	print(since_id)
+	#since_id = int(np.loadtxt('since_id.dat', dtype=int))
+	since_id = get_since_id(api)
+	print("most recent id", since_id)
 	prev = time.time()
 	
 	# start off with a title
