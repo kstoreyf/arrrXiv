@@ -146,7 +146,7 @@ def check_mentions(api, since_id):
 					in_reply_to_status_id=tweet.id,
 				)
 		if found and reply:
-			status = f"Paperrr for the landlubber @{handle}: {mytweet} \n https://twitter.com/{handle}/status/{tweet.id}"
+			status = f"Paperrr for the {piratename} @{handle}: {mytweet} \n https://twitter.com/{handle}/status/{tweet.id}"
 			print(status)
 			if tweet_now:
 				api.update_status(
