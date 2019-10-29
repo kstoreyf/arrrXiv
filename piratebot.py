@@ -95,6 +95,7 @@ def tweet_title(api):
 		api.update_status(mytweet)
 
 
+# TODO: change to checking last time i reply, when reply vs quote tweet
 def check_mentions(api, since_id):
 	print("Retrieving mentions")
 	print(since_id)
@@ -107,6 +108,7 @@ def check_mentions(api, since_id):
 		print('tweetid:',tweet.id)
 		print('sinceid:',since_id)
 		print('---')
+		
 		new_since_id = max(tweet.id, new_since_id)
 		print('new:',new_since_id)
 		pattern_new = re.compile("[0-9]{4}.[0-9]{5}")
@@ -167,16 +169,17 @@ def get_since_id(api):
 
 def main():
 	
-	interval = 60*60*6 # seconds
 
 	api = get_api()
-	#since_id = int(np.loadtxt('since_id.dat', dtype=int))
+	
 	since_id = get_since_id(api)
 	print("most recent id", since_id)
 	prev = time.time()
 
 	# schedule jobs
-	tweet_times = ['05:23', '05:25']	
+	# utc time! is eastern + 4 (pre-daylight savings...)
+	# 10am, 4pm=16:00
+	tweet_times = ['14:00', '20:00']	
 	for tt in tweet_times:
 		schedule.every().day.at(tt).do(tweet_title, api)
 	# start off with a title
