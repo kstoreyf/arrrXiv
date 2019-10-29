@@ -182,23 +182,13 @@ def main():
 	tweet_times = ['14:00', '20:00']	
 	for tt in tweet_times:
 		schedule.every().day.at(tt).do(tweet_title, api)
-	# start off with a title
-	#tweet_title(api)
 	
-	print(interval)
 	while True:
 		since_id = check_mentions(api, since_id)
 		print("time")
 		print(time.ctime())
-		#print(prev)
-		#now = time.time()
-		#print(now)
-		#print(now-prev)
-		#if (now - prev > interval):
-	    #	tweet_title(api)
-		#	prev = now
-		
 		schedule.run_pending()
+		
 		print("Waiting...")
 		time.sleep(10)
 
