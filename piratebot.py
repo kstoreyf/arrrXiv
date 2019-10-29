@@ -6,6 +6,7 @@ import feedparser
 import urllib
 import tweepy
 import re
+import schedule
 
 import translatorrr
 
@@ -75,7 +76,7 @@ def pirate_title(search_query, start=0):
 #print(p)
 
 def tweet_title(api):
-	print("Tweeting random title")
+	print("Time: {}, Tweeting random title".format(time.ctime()))
 	mytweet = None
 	for i in range(5):
 		rand = np.random.randint(10000) #max ive gotten to work
@@ -98,8 +99,8 @@ def check_mentions(api, since_id):
 	print("Retrieving mentions")
 	print(since_id)
 	new_since_id = since_id
-	print(tweepy.Cursor(api.mentions_timeline,
-        since_id=since_id))
+	#print(tweepy.Cursor(api.mentions_timeline,
+    #    since_id=since_id))
 
 	for tweet in tweepy.Cursor(api.mentions_timeline,
 		since_id=since_id).items():
@@ -173,7 +174,11 @@ def main():
 	since_id = get_since_id(api)
 	print("most recent id", since_id)
 	prev = time.time()
-	
+
+	# schedule jobs
+	tweet_times = ['01:03']	
+	for tt in tweet_times:
+		schedule.every().day.at(tt).do(tweet_title, api)
 	# start off with a title
 	#tweet_title(api)
 	
@@ -185,10 +190,11 @@ def main():
 		now = time.time()
 		print(now)
 		print(now-prev)
-		if (now - prev > interval):
-			tweet_title(api)
-			prev = now
+		#if (now - prev > interval):
+	    #	tweet_title(api)
+		#	prev = now
 		
+		schedule.run_pending()
 		print("Waiting...")
 		time.sleep(10)
 
