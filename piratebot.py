@@ -176,7 +176,7 @@ def main():
 	prev = time.time()
 
 	# schedule jobs
-	tweet_times = ['01:18', '01:20']	
+	tweet_times = ['05:23', '05:25']	
 	for tt in tweet_times:
 		schedule.every().day.at(tt).do(tweet_title, api)
 	# start off with a title
