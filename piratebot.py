@@ -176,7 +176,7 @@ def main():
 	prev = time.time()
 
 	# schedule jobs
-	tweet_times = ['01:05']	
+	tweet_times = ['01:13', '1:15']	
 	for tt in tweet_times:
 		schedule.every().day.at(tt).do(tweet_title, api)
 	# start off with a title
@@ -186,10 +186,11 @@ def main():
 	while True:
 		since_id = check_mentions(api, since_id)
 		print("times")
-		print(prev)
-		now = time.time()
-		print(now)
-		print(now-prev)
+		print(time.ctime())
+		#print(prev)
+		#now = time.time()
+		#print(now)
+		#print(now-prev)
 		#if (now - prev > interval):
 	    #	tweet_title(api)
 		#	prev = now
